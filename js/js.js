@@ -112,6 +112,18 @@ document.getElementById("guardar").addEventListener("click", function (event) {
   var lastName = document.getElementById("lname").value;
   var email = document.getElementById("email").value;
 
+  var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+  if ((email == "") || (firstName == "") || (lastName == "")) {  //COMPRUEBA CAMPOS VACIOS
+      alert("Los campos no pueden quedar vacios");
+      return true;
+  }
+
+  if ( !expr.test(email) ){ //COMPRUEBA MAIL
+    alert("Error: La dirección de correo " + email + " es incorrecta.");
+    return false;
+}
+
   // Crea una nueva fila en la tabla
   var table = document.getElementById("myTable");
   var newRow = table.insertRow();
