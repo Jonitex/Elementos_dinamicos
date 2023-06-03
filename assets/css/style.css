@@ -1,0 +1,243 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+nav{
+    background: #ec437b;
+    padding: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-size: bold;
+    font-family: monospace;
+    white-space: pre;
+}
+
+#menu {
+    width: 250px;
+    height: 100vh;
+    background-color: #ffffff;
+    color: #fff;
+    position: fixed;
+    left: -250px;
+    top: 0;
+    transition: left 0.3s ease;
+    border:1px solid #000;
+}
+
+#menu.active {
+    left: 0;
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0;
+    margin:0;
+}
+
+#menu ul li {
+    border: 1px solid #000;
+    color: #000;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+#menu ul li:hover{
+    background: #ec437b;
+    color: #fff;
+}
+
+#menu ul li:active{
+    background: #b17086;
+}
+
+.menu-toggle img{
+    width: 50px;
+}
+
+#myForm{
+    margin: 0 auto;
+    width: 55%;
+    height: 300px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px 50px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    margin-top: 100px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+ 
+#myForm input[type="text"]{
+    display: inline-block;
+    width: 45%;
+    margin-bottom: 10px;
+    margin: 10px;
+    height: 35px;
+}
+
+.sms{
+    width: 80%;
+    margin: 0 auto;   
+}
+
+#myForm input[type="email"]{
+    width: 95%;
+    margin: 10px;
+    height: 35px;
+}
+
+#bienvenido{
+    background: #ec437b;
+    padding: 10px;
+    color: #fff;
+}
+
+.botonsaludo{
+    margin-top: 20rem;
+    text-align: center;
+}
+    
+.bt-saludar{
+    text-align: center;
+    line-height: 500px;
+}
+
+.sms button{
+    display: block;
+}
+
+.sms button{
+    background: #fff;
+    color: #ec437b;
+    border: 1px solid #ec437b;
+    transition: 0.5s;
+    cursor: pointer;
+    float: right;
+}
+
+#saludar{
+    background: #ec437b;
+    padding: 10px;
+    font-size: 30px;
+    font-size: bold;
+    color: #fff;
+    border-radius: 2pc;
+    width: 500px;
+    font-family: monospace;
+    white-space: pre;
+}
+#saludar:hover{
+    background: #fff;
+    color: #ec437b;
+    border: 1px solid #ec437b;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#saludar:active{
+    background: #dc3545;
+    transition: 0s;
+    color: #fff;
+}
+
+#myForm #guardar{
+    background: #ec437b;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 2pc;
+    width: 12rem;
+    color: #fff;
+    float: right;
+    margin-right: 28px;
+    font-family: monospace;
+    white-space: pre;
+}
+#myForm #guardar:hover{
+    background: #dc3545;
+}
+
+#menu-toggle {
+    position: fixed;
+    left: 50px;
+    top: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0;
+}
+
+.image-container {
+    position: relative;
+    left: 0;
+    transition: left 0.5s ease;
+    
+}
+
+
+#container{
+    background: #ec437b;
+    margin-left: 5px;
+    margin-top: 1rem;
+    width: 50px;
+    border-radius: 50%;
+    padding: 6px;
+}
+#container:hover{
+    background: #dc3545;
+}
+
+#container:active{
+    padding: 3px;
+}
+
+#menu-toggle.active {
+    transform: translateX(200px);
+ }
+
+
+#menu.active+#menu-toggle {
+    transform: translateX(200px);
+} 
+
+#menu-toggle-label{
+    display: block;
+    width: 30px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.btn-editar,
+.btn-borrar {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/*CODIGO RESPONSIVE*/
+@media screen and (max-width: 732px) {
+    #myForm{
+        width: 70%;
+        margin-top: -0.5rem;
+    }
+    #myForm input{
+        width: 100%;
+        
+    }
+         #myForm input[type="text"] {
+             width: 100%;            
+         }
+    
+         #myForm input[type="email"] {
+             width: 100%;
+         }
+        #myForm #guardar{
+            
+            text-align: center;
+            margin-right: 40px;
+        }
+}
