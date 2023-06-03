@@ -211,12 +211,60 @@ form {
     margin-bottom: 20px;
 }
 
+
+table{
+    border: 1px solid #000;
+}
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px;
+    border: none;
+}
+
+
 .btn-editar,
 .btn-borrar {
     padding: 5px 10px;
     border: none;
     cursor: pointer;
 }
+
+.btn-editar {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.btn-borrar {
+    background-color: #dc3545;
+    color: #fff;
+}
+ 
+
+.delete-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: pink;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+th,
+td {
+    margin-top: 25px;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #a8a1a1;
+}
+
+
 
 /*CODIGO RESPONSIVE*/
 @media screen and (max-width: 732px) {

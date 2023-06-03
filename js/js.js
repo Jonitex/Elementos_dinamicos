@@ -100,3 +100,48 @@ function cerrarMensaje() {
   var mensaje = document.getElementById("mensaje");
   mensaje.style.display = "none";
 }
+
+
+
+//codigo de la tabla
+document.getElementById("guardar").addEventListener("click", function (event) {
+  event.preventDefault(); // Evita el envío del formulario por defecto
+
+  // Obtén los valores de los campos de entrada
+  var firstName = document.getElementById("fname").value;
+  var lastName = document.getElementById("lname").value;
+  var email = document.getElementById("email").value;
+
+  // Crea una nueva fila en la tabla
+  var table = document.getElementById("myTable");
+  var newRow = table.insertRow();
+
+  // Agrega celdas a la fila con los datos ingresados
+  var cell1 = newRow.insertCell();
+  cell1.innerHTML = firstName;
+
+  var cell2 = newRow.insertCell();
+  cell2.innerHTML = lastName;
+
+  var cell3 = newRow.insertCell();
+  cell3.innerHTML = email;
+
+  var cell4 = newRow.insertCell();
+
+  // Agrega un botón "Eliminar" a la celda de acciones
+  var deleteButton = document.createElement("button");
+
+  deleteButton.innerHTML = "X";
+  deleteButton.style.borderRadius = "50%";
+  deleteButton.style.backgroundColor = "red";
+  deleteButton.style.color = "white";
+  deleteButton.addEventListener("click", function () {
+    var row = this.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  });
+  cell4.appendChild(deleteButton);
+  // Limpia los campos de entrada después de guardar los datos
+  document.getElementById("fname").value = "";
+  document.getElementById("lname").value = "";
+  document.getElementById("email").value = "";
+});
