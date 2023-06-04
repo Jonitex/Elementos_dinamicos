@@ -11,11 +11,10 @@ var menuToggleimg = document.getElementById(menuToggleimg);
 var menuToggleimg = document.getElementById("menu-toggleimg");
 var container = document.getElementById("container");
 var checkbox = document.getElementById("menu-toggle");
+document.getElementById("guardar").addEventListener('click', GetData);//Evento para el boton agregar
 var isMoved = false;
 
-/*
 //codigo del menu y el checkbox
-*/
 
 menuToggle.addEventListener("change", function () {
   if (menuToggle.checked) {
@@ -41,9 +40,7 @@ menuToggle.addEventListener("change", function () {
   }
 });
 
-/*
-/*Funcion para el boton >>Inicio<< del menu.
-*/ 
+/*Funcion para el boton >>Inicio<< del menu.*/
 
 inicioLink.addEventListener("click", function () {
   inicioContent.style.display = "block";
@@ -101,59 +98,131 @@ function cerrarMensaje() {
   mensaje.style.display = "none";
 }
 
+/*
+**
 
+*/
 
-//codigo de la tabla
-document.getElementById("guardar").addEventListener("click", function (event) {
-  event.preventDefault(); // Evita el envío del formulario por defecto
+var dataArray=[];//Array en el que se iran agregando los registros.
+var code_row = -1;//Variable global para capturar la posicion del elemento seleccionado del array al momento de actualizar.
+//funcion para  leer los datos introducidos en los campos.
 
+function GetData()
+{
+  event.preventDefault();
   // Obtén los valores de los campos de entrada
   var firstName = document.getElementById("fname").value;
   var lastName = document.getElementById("lname").value;
   var email = document.getElementById("email").value;
 
-  var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-  if ((email == "") || (firstName == "") || (lastName == "")) {  //COMPRUEBA CAMPOS VACIOS
-      alert("Los campos no pueden quedar vacios");
-      return true;
+  var row = { nombre: firstName, Apellido: lastName, email: email };//Inicializamos las propiedades para el elemento del array
+  
+  if(validar_Campos(firstName, lastName, email) === true)
+  {
+    ClearTable();//Limpiamos la tabla de nuestra pagina.
+    save_array(row);//Se actualiza si ya existe el registro, si no existe se agrega al array.
+    dataArray.forEach(elementos =>{console.log(elementos)});
   }
 
-  if ( !expr.test(email) ){ //COMPRUEBA MAIL
-    alert("Error: La dirección de correo " + email + " es incorrecta.");
-    return false;
 }
 
-  // Crea una nueva fila en la tabla
-  var table = document.getElementById("myTable");
-  var newRow = table.insertRow();
+//Funcion para construir los registros de la tabla (HTML).
+function AddRows()
+{
 
-  // Agrega celdas a la fila con los datos ingresados
-  var cell1 = newRow.insertCell();
-  cell1.innerHTML = firstName;
+  for (const pos in dataArray) {
+    const row = dataArray[pos]
 
-  var cell2 = newRow.insertCell();
-  cell2.innerHTML = lastName;
+    document.getElementById("myTable").insertRow(-1).innerHTML = '<tr id="n_row '+1+'"><td>'+ row.nombre + '</td><td>' + row.Apellido + '</td><td>' + row.email + '</td>'+
+    '<a href="#" style="  top: 10px; position: relative; background: #167f0e; padding: 4px; color: #fff; text-decoration: none; #fff; margin: 5px ;border-radius: 5px;" " onclick="editar('+ pos +')";>Editar</a>' +
+    '<a href="#" style=" top: 10px; position: relative; background: #fd0d03; padding: 4px; color: #fff;  text-decoration: none; #fff; margin: 5px ;border-radius: 5px; " onclick="eliminar('+ pos +')";>Eliminar</a></td></tr>';
+  }
+};
 
-  var cell3 = newRow.insertCell();
-  cell3.innerHTML = email;
+function limpiar(){
+    // Limpia los campos de entrada después de guardar los datos
+    document.getElementById("fname").value = "";
+    document.getElementById("lname").value = "";
+    document.getElementById("email").value = "";
+}
 
-  var cell4 = newRow.insertCell();
+//Funcion para actualizar o agregar nuevo registro al array.
+function save_array(row){
 
-  // Agrega un botón "Eliminar" a la celda de acciones
-  var deleteButton = document.createElement("button");
+  if(code_row > -1){//Si la condicion se cumple se actualiza el registro seleccionado.
 
-  deleteButton.innerHTML = "X";
-  deleteButton.style.borderRadius = "50%";
-  deleteButton.style.backgroundColor = "red";
-  deleteButton.style.color = "white";
-  deleteButton.addEventListener("click", function () {
-    var row = this.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-  });
-  cell4.appendChild(deleteButton);
-  // Limpia los campos de entrada después de guardar los datos
-  document.getElementById("fname").value = "";
-  document.getElementById("lname").value = "";
-  document.getElementById("email").value = "";
-});
+    update_row(dataArray, code_row, row);//Funcion para actualizar registros.
+    AddRows();  //Construimos los registros de la tabla.
+    limpiar();
+    code_row = -1;//Se le asigna -1 por si se quiere agregar un registro nuevo.
+  }else{
+    dataArray.push(row) //Se agrega un elemento nuevo en el array.
+    AddRows(); //Construimos los registros de la tabla.
+    limpiar();
+  }
+
+}
+
+//Funcion para actualizar registros.
+function update_row(dataArray, pos, newValue) {
+  dataArray[pos] = newValue;
+}
+
+//Funcion para cargar un registro del array a los campos.
+function editar(pos){
+  const row = dataArray[pos];//Capturamos el registro
+  //Cargamos los datos a los campos
+  code_row = row.codigo;
+  document.getElementById("fname").value = row.nombre;
+  document.getElementById("lname").value = row.Apellido;
+  document.getElementById("email").value = row.email;
+  console.log(dataArray[pos]);
+  code_row = pos;
+} 
+
+// funcion para limpiar tabla de la pagina.
+function ClearTable()
+{
+  let tablaregistros = document.getElementById("myTable");
+  while(tablaregistros.rows.length > 1) {
+    tablaregistros.deleteRow(-1);//Se elimina cada registro de la tabla menos el encabezado.
+  }
+}
+
+//Funcion para eliminar registro.
+function eliminar(pos){
+  dataArray.splice(pos, 1);
+  ClearTable();
+  AddRows();
+} 
+
+
+//Funcion para validar campos nulos
+function validar_Campos(firstName, lastName, email)
+{
+  var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+  if(firstName == "")
+  {
+    alert("Los campos no pueden quedar vacios");
+    firstName.focus();
+    return false;
+  }else if(lastName == "")
+  {
+    alert("Los campos no pueden quedar vacios");
+    lastName.focus();
+    return false;
+  }else if(email == "")
+  {
+    alert("Los campos no pueden quedar vacios");
+    email.focus();
+    return false;
+  }else if( !expr.test(email) )
+  { //COMPRUEBA MAIL
+    alert("Error: La dirección de correo " + email + " es incorrecta.");
+    email.focus();
+    return false; 
+  }
+
+  return true
+}
